@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public class MazeMover : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    void Start()               
     {
         //Test
         desiredDirection = new Vector2(1, 0);
@@ -19,16 +20,15 @@ public class MazeMover : MonoBehaviour
         wallTileMap = GameObject.FindObjectOfType<Tilemap>();
         //Quite heavy in terms of data so definitely don't want to call
         //on each Update() but its fine to do once in Start() for now.
-
     }
-
+    
     float Speed = 3;
 
-    public Vector2 desiredDirection; //current direction we want to move in
+    private Vector2 desiredDirection; //current direction we want to move in
 
-    Vector2 targetPos;
+    private Vector2 targetPos;
 
-    Tilemap wallTileMap;
+    private Tilemap wallTileMap;
 
     // Update is called once per frame
     void Update()
@@ -134,5 +134,21 @@ public class MazeMover : MonoBehaviour
 
         //Do Move!
         transform.Translate(movementThisUpdate);
-            }
+    }
+
+    public void SetDesiredDirection(Vector2 dir)
+    {
+        //Just set our desired direction.
+        desiredDirection = dir;
+    }
+
+    public Vector2 GetDesiredDirection()
+    {
+        //Get input!
+        //float horizontal = Input.GetAxis("Horizontal");
+        //float vertical = Input.GetAxis("Vertical");
+        //desiredDirection = new Vector2(horizontal, vertical);
+        return desiredDirection;
+    }
+    
 }
