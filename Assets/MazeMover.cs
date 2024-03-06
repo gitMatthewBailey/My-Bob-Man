@@ -70,11 +70,7 @@ public class MazeMover : MonoBehaviour
         targetPos += desiredDirection;
 
         //Normalise the target position to a tile's position
-        //This might not line up right if we have a weirdly offset tilemap
-        //A 'more robust' way to do this might be 
-        //to use the Tilemap's CellToWorld(), where you'd lookup the tile at the new
-        //target position, reading back that Tile's world position.
-        targetPos = new Vector2(Mathf.FloorToInt(targetPos.x), Mathf.FloorToInt(targetPos.y));
+        targetPos = FloorPosition(targetPos);
 
         if (isTileEmpty(targetPos))
         {
@@ -85,13 +81,14 @@ public class MazeMover : MonoBehaviour
         targetPos = transform.position;
     }
 
-    bool IsDirectionLegal()
+    Vector2 FloorPosition(Vector2 pos)
     {
-        //Directions will be legal unless trying to slam into a wall!
-
-        Vector2 checkTilePos = transform.position + (Vector3)desiredDirection;
-        return isTileEmpty(checkTilePos);
-        //if theres a tile there then its not legal (hence the inversion)
+        //Normalising to a tile's position.
+        //This might not line up right if we have a weirdly offset tilemap
+        //A 'more robust' way to do this might be 
+        //to use the Tilemap's CellToWorld(), where you'd lookup the tile at the new
+        //target position, reading back that Tile's world position.
+        return new Vector2(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y));
     }
 
     bool isTileEmpty(Vector2 pos)
@@ -136,10 +133,22 @@ public class MazeMover : MonoBehaviour
         transform.Translate(movementThisUpdate);
     }
 
-    public void SetDesiredDirection(Vector2 dir)
+    public void SetDesiredDirection(Vector2 newDir)
     {
         //Just set our desired direction.
-        desiredDirection = dir;
+        //Make sure not diagonal? In THEORY, our PlayerMover/EnemyMover script already does this.
+        
+        // But we shouldn't accept a direction that would slam us into a wall.
+        
+        Vector2 testPos = FloorPosition(targetPos + newDir);
+        if(isTileEmpty(testPos) == false)
+        {
+            //Trying to slam into wall, ignore.
+            Debug.Log("Attempting to move into wall, ignoring.");
+            return;
+        }
+
+        desiredDirection = newDir;
     }
 
     public Vector2 GetDesiredDirection()
