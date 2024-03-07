@@ -54,16 +54,19 @@ public class MazeMover : MonoBehaviour
     //we're currently (if we're in Update() its the time since this was
     //last called, if in FixedUpdate() its the time since that.
 
-    void UpdateTargetPosition()
+    void UpdateTargetPosition( bool force = false )
     {
-        //Have we reached our target?
-        float distanceToTarget = Vector3.Distance(transform.position, targetPos);
-        //Only checking for 0 here since we can check for this in MoveToTargetPosition()
-        //and if we're a little bit out we can just set ourselves correctly there.
-        if(distanceToTarget > 0)
+        if (force == false)
         {
-            //Not there yet, no need to update.
-            return;
+            //Have we reached our target?
+            float distanceToTarget = Vector3.Distance(transform.position, targetPos);
+            //Only checking for 0 here since we can check for this in MoveToTargetPosition()
+            //and if we're a little bit out we can just set ourselves correctly there.
+            if(distanceToTarget > 0)
+            {
+                //Not there yet, no need to update.
+                return;
+            }
         }
 
         //We have reached our target, we need a new target position.
@@ -144,11 +147,18 @@ public class MazeMover : MonoBehaviour
         if(isTileEmpty(testPos) == false)
         {
             //Trying to slam into wall, ignore.
-            Debug.Log("Attempting to move into wall, ignoring.");
             return;
         }
 
+        Vector2 oldDir = desiredDirection;
         desiredDirection = newDir;
+        //If the input is to reverse our direction, do it instantly?
+        //if ((oldDir.x * newDir.x) < 0 || (oldDir.y * newDir.y) < 0)
+        if (Vector2.Dot(oldDir, newDir) < 0) // above and this are mathematically identical hence going with slicker ver.
+        {
+            UpdateTargetPosition(true); //this is all we want to do, but
+            //only when we're trying to reverse our direction.
+        }
     }
 
     public Vector2 GetDesiredDirection()
