@@ -20,6 +20,8 @@ public class MazeMover : MonoBehaviour
         wallTileMap = GameObject.FindObjectOfType<Tilemap>();
         //Quite heavy in terms of data so definitely don't want to call
         //on each Update() but its fine to do once in Start() for now.
+
+        // TODO: we broke this, fix it.
     }
     
     float Speed = 3;
@@ -40,6 +42,7 @@ public class MazeMover : MonoBehaviour
         //First check we can legally move in the direction we want!
         UpdateTargetPosition();
 
+        //Do move.
         MoveToTargetPosition();
         
     }

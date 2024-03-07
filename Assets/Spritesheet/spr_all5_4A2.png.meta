@@ -294,7 +294,7 @@ TextureImporter:
         width: 20
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -302,6 +302,48 @@ TextureImporter:
       bones: []
       spriteID: 11de0324481844c4ab0341246cb448d6
       internalID: -823977867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spr_all5_4A2_0
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 291
+        width: 1
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f575c09c84918c4458e848558343934d
+      internalID: -694167126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: white_pellet
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 274
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4ad333b830b0a94a9025def0e929689
+      internalID: 500715965
       vertices: []
       indices: 
       edges: []
@@ -318,6 +360,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       player_south_idle_1: -823977867
+      spr_all5_4A2_0: -694167126
       wall_ES: -404905159
       wall_ESW: -461905624
       wall_NE: 42733568
@@ -327,6 +370,7 @@ TextureImporter:
       wall_NSW: -1009391342
       wall_NW: 343914369
       wall_SW: 1287386806
+      white_pellet: 500715965
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
