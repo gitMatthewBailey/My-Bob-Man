@@ -10,7 +10,7 @@ public class PelletTileMap : MonoBehaviour
     {
         pelletEaters = GameObject.FindObjectsOfType<PelletEater>();
 
-        myTileMap = GetComponent<Tilemap>();
+        myTilemap = GetComponent<Tilemap>();
         //easy, because the script belongs to the same object as the Tilemap
     }
 
@@ -18,7 +18,13 @@ public class PelletTileMap : MonoBehaviour
     //if that's something that happens (such as adding or removing PelletEaters (multiplayer?))
     PelletEater[] pelletEaters;
 
-    Tilemap myTileMap;
+    Tilemap myTilemap;
+
+    //'FruitTilemap' and 'PPTilemap' created in Unity. (Identical to 'PelletTilemap' (used to hold
+    //reference to this script, and to hold the sprites for fruits and power pellets (PP))).
+    
+    //What happens when we eat a pellet on this map?
+    
 
     // Update is called once per frame
     void Update()
@@ -32,8 +38,10 @@ public class PelletTileMap : MonoBehaviour
 
     void CheckPellet(PelletEater pelletEater)
     {
+        Vector2 offsetPos = (Vector2)pelletEater.transform.position + new Vector2(0.5f, 0.5f);
+
         //TODO: Add code to check what tile pe is in, and if there is a pellet there.
-        TileBase tile = GetTileAt((Vector2)pelletEater.transform.position);
+        TileBase tile = GetTileAt(offsetPos);
 
         if (tile == null)
         {
@@ -42,6 +50,20 @@ public class PelletTileMap : MonoBehaviour
         }
 
         Debug.Log("Scran!");
+
+        EatPelletAt(offsetPos);
+    }
+
+    void EatPelletAt(Vector2 pos )
+    {
+        //TODO: Add code to eat the PelletEater's Pellet
+        SetTileAt(pos, null);
+    }
+
+    void SetTileAt(Vector2 pos, TileBase tile)
+    {
+        Vector3Int cellPos = myTilemap.WorldToCell(pos);
+        myTilemap.SetTile(cellPos, tile);
     }
 
     //below is ctrl c+v from MazeMover.cs
@@ -49,10 +71,10 @@ public class PelletTileMap : MonoBehaviour
     TileBase GetTileAt(Vector2 pos)
     {
         //First we need to change the world position to a tile cell index.
-        Vector3Int cellPos = myTileMap.WorldToCell(pos);
+        Vector3Int cellPos = myTilemap.WorldToCell(pos);
 
         //Now return the tile at that cell.
-        return myTileMap.GetTile(cellPos);
+        return myTilemap.GetTile(cellPos);
     }
 
 }
