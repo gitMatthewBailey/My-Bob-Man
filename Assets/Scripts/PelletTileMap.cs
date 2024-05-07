@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class PelletTileMap : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // The actual pellet tilemap has this local code and is checking for pellets.
     void Start()
     {
         pelletEaters = GameObject.FindObjectsOfType<PelletEater>();
@@ -14,7 +14,7 @@ public class PelletTileMap : MonoBehaviour
         //easy, because the script belongs to the same object as the Tilemap
     }
 
-    // TODO: Add code for pellet eaters to signal updating this whenever they come or go.,
+    // TODO: Add code for pellet eaters to signal updating this whenever they come or go,
     //if that's something that happens (such as adding or removing PelletEaters (multiplayer?))
     PelletEater[] pelletEaters;
 
@@ -24,7 +24,17 @@ public class PelletTileMap : MonoBehaviour
     //reference to this script, and to hold the sprites for fruits and power pellets (PP))).
     
     //What happens when we eat a pellet on this map?
+    //For a simple Pac-Man game, this is all we'd really need to know, but could be expanded on and 
+    //potentially re-done into a more flexible but more complex design.
     
+    //But what we don't have is the ability to get information out of this pellet, 
+    //which is where subclassing TileBase in TileData would come in.
+
+    //What we can do (because we currently don't have or need a bunch of custom behaviours) is have these
+    //variables shared which we'll use  to hold information about things on the map.
+    public int PelletPoints = 1;
+    public bool RequiredForLevelCompletion = false;
+    public float PowerSeconds = 0;
 
     // Update is called once per frame
     void Update()
@@ -32,12 +42,18 @@ public class PelletTileMap : MonoBehaviour
         //Is a pellet eater on a tile with a pellet?
         foreach (PelletEater pe in pelletEaters)
         {
+            //Not having to check every pellet, just literally checking in the tile we're about to enter, whether
+            //there's a pellet graphic or not.
+
             CheckPellet(pe);
         }
     }
 
     void CheckPellet(PelletEater pelletEater)
     {
+        //No matter what, at some point something we do will not look right in terms of graphics, whether
+        //we use a center point, bottom left corner or whatever. So we need to use maths to determine the offset.
+                                    //this lookup should be very lightweight
         Vector2 offsetPos = (Vector2)pelletEater.transform.position + new Vector2(0.5f, 0.5f);
 
         //TODO: Add code to check what tile pe is in, and if there is a pellet there.
@@ -56,8 +72,9 @@ public class PelletTileMap : MonoBehaviour
 
     void EatPelletAt(Vector2 pos )
     {
-        //TODO: Add code to eat the PelletEater's Pellet
         SetTileAt(pos, null);
+
+        //TODO: Do the thing... points and whatnot
     }
 
     void SetTileAt(Vector2 pos, TileBase tile)

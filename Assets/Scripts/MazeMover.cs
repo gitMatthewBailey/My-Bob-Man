@@ -9,28 +9,37 @@ public class MazeMover : MonoBehaviour
     // Start is called before the first frame update
     void Start()               
     {
-        //Test
-        desiredDirection = new Vector2(1, 0);
 
         //Set our initial target position to be our starting position so
         //that the Update() will update the target position correctly.
         targetPos = transform.position;
 
         //This only works so long as there's only ONE TileMap
-        wallTileMap = GameObject.FindObjectOfType<Tilemap>();
+        //TODO: We broke this, fix this.
+
+        //Before GameManager -> wallTileMap = GameObject.FindObjectOfType<WallTileMap>().GetComponent<Tilemap>();
+        //After ->
+        //wallTileMap = GameManager.WallTileMap;
+        //And we probably don't even need to save the reference here, we can just say GameManager.WallTileMap
+        //when we want to use it
+
         //Quite heavy in terms of data so definitely don't want to call
         //on each Update() but its fine to do once in Start() for now.
 
-        // TODO: we broke this, fix it.
     }
     
-    float Speed = 3;
+    //Allow us to change this in the Unity editor
+    [SerializeField]
+    [Tooltip("How fast we can move")]
+    [Range(1, 10)]
+    private float _speed = 3;
+    public float Speed { get { return _speed; } }
 
     private Vector2 desiredDirection; //current direction we want to move in
 
     private Vector2 targetPos;
 
-    private Tilemap wallTileMap;
+    //private Tilemap wallTileMap;
 
     // Update is called once per frame
     void Update()
@@ -76,6 +85,7 @@ public class MazeMover : MonoBehaviour
         targetPos += desiredDirection;
 
         //Normalise the target position to a tile's position
+        //essentially lining up the target position with the centre of the tile
         targetPos = FloorPosition(targetPos);
 
         if (isTileEmpty(targetPos))
@@ -83,7 +93,7 @@ public class MazeMover : MonoBehaviour
             return;
         }
 
-        //if we get here it means our target position is occupied, so don't allow.
+        //if we get here it means our target position is occupied, so stand still.
         targetPos = transform.position;
     }
 
@@ -105,10 +115,10 @@ public class MazeMover : MonoBehaviour
     TileBase GetTileAt(Vector2 pos)
     {
         //First we need to change the world position to a tile cell index.
-        Vector3Int cellPos = wallTileMap.WorldToCell(pos);
+        Vector3Int cellPos = GameManager.WallTilemap.WorldToCell(pos);
 
         //Now return the tile at that cell.
-        return wallTileMap.GetTile(cellPos);
+        return GameManager.WallTilemap.GetTile(cellPos);
     }
 
     void MoveToTargetPosition()
@@ -118,7 +128,7 @@ public class MazeMover : MonoBehaviour
 
         //And in what direction is this movement?
         //Towards our target position!
-        //Also, we're giving the vector a length of 1 with 'normalized' *spit* silly americans *in overtly british voice*
+        //Also, we're giving the vector a length of 1 with 'normalized' 
         //to make it easier to work with when manipulating with arithmetic.
         Vector2 distToTarget = (targetPos - (Vector2)transform.position);
         //And how far are we moving in this update? 
@@ -138,6 +148,8 @@ public class MazeMover : MonoBehaviour
         //Do Move!
         transform.Translate(movementThisUpdate);
     }
+
+    
 
     public void SetDesiredDirection(Vector2 newDir)
     {

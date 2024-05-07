@@ -315,7 +315,7 @@ TextureImporter:
         width: 1
         height: 3
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -336,7 +336,7 @@ TextureImporter:
         width: 20
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -344,6 +344,48 @@ TextureImporter:
       bones: []
       spriteID: b4ad333b830b0a94a9025def0e929689
       internalID: 500715965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: power_pellet
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 274
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cff31d3932db7bf4ba5fb3ebdecc4af1
+      internalID: -173699195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fruit_cherry
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 232
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f7be1bed4e63634b9fb4e1ab9c1d236
+      internalID: -707816229
       vertices: []
       indices: 
       edges: []
@@ -359,7 +401,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      fruit_cherry: -707816229
       player_south_idle_1: -823977867
+      power_pellet: -173699195
       spr_all5_4A2_0: -694167126
       wall_ES: -404905159
       wall_ESW: -461905624

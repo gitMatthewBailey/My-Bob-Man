@@ -21,7 +21,7 @@ public class TileData : ScriptableObject
     //pellets aren't even game objects, they're just sprites on a tilemap. So, the Tilemaps will
     //be the 'observer' and the sprites attached to them will be the things that are being observed. 
 
-    //I think maybe subclassing from TileData would be the way to go if I wanted to add my own mechanics in the 
+    // TODO: I think maybe subclassing from TileData would be the way to go if I wanted to add my own mechanics in the 
     //future (like powerups that arent in Pac-Man for example).
 
 

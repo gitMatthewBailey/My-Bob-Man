@@ -9,9 +9,10 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(MazeMover))]
 public class PlayerMover : MonoBehaviour
 {
-//Could subclass and inherit Update from MazeMover but having this as just its own
-//implementation is how I'm going to do it as I'm following along a tutorial and 
-//its how theyve explained it, but please let me know if you have any thoughts.
+//Could subclass and inherit Update from MazeMover but having this as just another component
+//makes just as much sense and is what Unity is based on.
+//PlayerMover really just wants to change desiredDirection so that's the purpose of having
+//Setters and Getters in the MazeMover.
 
     // Start is called before the first frame update
     void Start()
