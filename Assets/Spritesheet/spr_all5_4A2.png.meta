@@ -378,7 +378,7 @@ TextureImporter:
         width: 20
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -386,6 +386,27 @@ TextureImporter:
       bones: []
       spriteID: 2f7be1bed4e63634b9fb4e1ab9c1d236
       internalID: -707816229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_south
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 232
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1dd6fa84ece5fd4c8d1078c7831c31f
+      internalID: -501807280
       vertices: []
       indices: 
       edges: []
@@ -401,6 +422,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      enemy_south: -501807280
       fruit_cherry: -707816229
       player_south_idle_1: -823977867
       power_pellet: -173699195

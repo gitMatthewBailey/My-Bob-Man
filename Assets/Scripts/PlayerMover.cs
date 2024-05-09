@@ -9,18 +9,20 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(MazeMover))]
 public class PlayerMover : MonoBehaviour
 {
-//Could subclass and inherit Update from MazeMover but having this as just another component
-//makes just as much sense and is what Unity is based on.
+//Could subclass and inherit Update from MazeMover but having PlayerMover as just another component
+//makes just as much sense and might actually be better.
 //PlayerMover really just wants to change desiredDirection so that's the purpose of having
 //Setters and Getters in the MazeMover.
 
-    // Start is called before the first frame update
-    void Start()
+    //Class variables to declare so we can use them in the methods with less of a performance hit.
+    MazeMover mazeMover;
+    Vector2 newDir;
+
+    // Start changed to Awake
+    void Awake()
     {
         mazeMover = GetComponent<MazeMover>();
     }
-
-    MazeMover mazeMover;
 
     // Update is called once per frame
     void Update()
@@ -45,7 +47,8 @@ public class PlayerMover : MonoBehaviour
         //it to properly tell us the exact value of the button press (straight to 1 instead of 
         //simulating a joystick's axis movement with GetAxis)
 
-        Vector2 newDir = new Vector2(
+        //Initialise our new direction
+        newDir = new Vector2(
             Input.GetAxisRaw("Horizontal"),
             Input.GetAxisRaw("Vertical")
         );
@@ -71,7 +74,13 @@ public class PlayerMover : MonoBehaviour
             newDir.x = 0;
         }
 
-        mazeMover.SetDesiredDirection(newDir.normalized);
+        //Set our new direction
+        //true is there because there was a bug with the ghosts where they move diagonally
+        //when they reverse their direction and try to turn direction in the same frame. So, 
+        //as a quick fix we make a boolean to allow the player to instant update while stopping
+        //the ghost from doing the same. (This also then means that the player is capable of doing
+        //the same, but as it isn't automated, and our scope is so small, it isn't a massive problem.)
+        mazeMover.SetDesiredDirection(newDir.normalized, true);
 
         //Or:
         

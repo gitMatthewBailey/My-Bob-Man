@@ -4,15 +4,5 @@ using UnityEngine;
 
 public class PelletEater : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //Simply used to identify entities in the game that are so-called pellet eaters.
 }

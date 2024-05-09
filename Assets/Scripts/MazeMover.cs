@@ -6,6 +6,26 @@ using UnityEngine.Tilemaps;
 
 public class MazeMover : MonoBehaviour
 {
+    //Speed
+    //Allows us to change this in the Unity editor
+    [SerializeField]
+    [Tooltip("How fast we can move")]
+    [Range(1, 10)]
+    private float _speed = 3;
+    public float Speed { get { return _speed; } }
+
+    private Vector2 desiredDirection; //current direction we want to move in
+
+    private Vector2 targetPos;
+
+    //private Tilemap wallTileMap;
+
+    public delegate void OnEnterNewTileDelegate();
+    public event OnEnterNewTileDelegate OnEnterNewTile;
+
+    float tileDistanceTolerance = 0.01f; //How close to the target pos counts as "arriving"
+
+
     // Start is called before the first frame update
     void Start()               
     {
@@ -27,19 +47,6 @@ public class MazeMover : MonoBehaviour
         //on each Update() but its fine to do once in Start() for now.
 
     }
-    
-    //Allow us to change this in the Unity editor
-    [SerializeField]
-    [Tooltip("How fast we can move")]
-    [Range(1, 10)]
-    private float _speed = 3;
-    public float Speed { get { return _speed; } }
-
-    private Vector2 desiredDirection; //current direction we want to move in
-
-    private Vector2 targetPos;
-
-    //private Tilemap wallTileMap;
 
     // Update is called once per frame
     void Update()
@@ -81,6 +88,14 @@ public class MazeMover : MonoBehaviour
             }
         }
 
+        // If we get here, we've just entered a new tile!
+        //Give other scripts a chance to respond to this event
+        //and maybe update desired direction.
+        if (OnEnterNewTile != null)
+        {
+            OnEnterNewTile();
+        }
+
         //We have reached our target, we need a new target position.
         targetPos += desiredDirection;
 
@@ -88,6 +103,7 @@ public class MazeMover : MonoBehaviour
         //essentially lining up the target position with the centre of the tile
         targetPos = FloorPosition(targetPos);
 
+        //Would we be heading into a wall?
         if (isTileEmpty(targetPos))
         {
             return;
@@ -105,6 +121,13 @@ public class MazeMover : MonoBehaviour
         //to use the Tilemap's CellToWorld(), where you'd lookup the tile at the new
         //target position, reading back that Tile's world position.
         return new Vector2(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y));
+    }
+
+    //public helper function that we can call in other classes to do with movement
+    public bool WouldHitWall()
+    {
+        //Returns true if our targetPos is a wall
+        return isTileEmpty(targetPos + desiredDirection) == false;
     }
 
     bool isTileEmpty(Vector2 pos)
@@ -147,29 +170,41 @@ public class MazeMover : MonoBehaviour
 
         //Do Move!
         transform.Translate(movementThisUpdate);
+
+        //Because of floating point arithmetic, it's possible for the position to be something extremely
+        //"close" to the targetPos, but not actually there, which would cause the entity to "stall out" and stop.
+        //(3.000001 is possible as an entities' position)
+        if (Vector2.Distance(targetPos, transform.position) < tileDistanceTolerance)
+        {
+            //Close enough to count as "arriving"
+            transform.position = targetPos;
+        }
     }
 
     
 
-    public void SetDesiredDirection(Vector2 newDir)
+    public void SetDesiredDirection(Vector2 newDir, bool canInstantUpdate = false)
     {
         //Just set our desired direction.
         //Make sure not diagonal? In THEORY, our PlayerMover/EnemyMover script already does this.
         
         // But we shouldn't accept a direction that would slam us into a wall.
         
-        Vector2 testPos = FloorPosition(targetPos + newDir);
-        if(isTileEmpty(testPos) == false)
-        {
-            //Trying to slam into wall, ignore.
-            return;
-        }
+        //if (preventInvalidDirection)
+        //{
+            Vector2 testPos = FloorPosition(targetPos + newDir);
+            if(isTileEmpty(testPos) == false)
+            {
+                //Trying to slam into wall, ignore.
+                return;
+            }
+        //}
 
         Vector2 oldDir = desiredDirection;
         desiredDirection = newDir;
         //If the input is to reverse our direction, do it instantly?
-        //if ((oldDir.x * newDir.x) < 0 || (oldDir.y * newDir.y) < 0)
-        if (Vector2.Dot(oldDir, newDir) < 0) // above and this are mathematically identical hence going with slicker ver.
+        //if (canInstantUpdate && ((oldDir.x * newDir.x) < 0 || (oldDir.y * newDir.y) < 0))
+        if (canInstantUpdate && (Vector2.Dot(oldDir, newDir) < 0)) // above and this are mathematically identical hence going with slicker ver.
         {
             UpdateTargetPosition(true); //this is all we want to do, but
             //only when we're trying to reverse our direction.
