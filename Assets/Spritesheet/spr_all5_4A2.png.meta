@@ -391,10 +391,73 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy_south
+      name: enemy_green_south
       rect:
         serializedVersion: 2
         x: 43
+        y: 232
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1dd6fa84ece5fd4c8d1078c7831c31f
+      internalID: -501807280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_blue_south
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 253
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92e41d784db461f4c8b4e4ab4dc2de59
+      internalID: 136076569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_pink_south
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 253
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0bdf3fe5b3779841b72ff37e708544f
+      internalID: 1433860704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_red_south
+      rect:
+        serializedVersion: 2
+        x: 211
         y: 232
         width: 20
         height: 20
@@ -405,8 +468,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1dd6fa84ece5fd4c8d1078c7831c31f
-      internalID: -501807280
+      spriteID: 48abef44c35e9e0498fa36bfe3a419c3
+      internalID: -371419565
       vertices: []
       indices: 
       edges: []
@@ -422,7 +485,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      enemy_south: -501807280
+      enemy_blue_south: 136076569
+      enemy_green_south: -501807280
+      enemy_pink_south: 1433860704
+      enemy_red_south: -371419565
       fruit_cherry: -707816229
       player_south_idle_1: -823977867
       power_pellet: -173699195

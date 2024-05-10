@@ -34,18 +34,11 @@ public class MazeMover : MonoBehaviour
         //that the Update() will update the target position correctly.
         targetPos = transform.position;
 
-        //This only works so long as there's only ONE TileMap
-        //TODO: We broke this, fix this.
-
         //Before GameManager -> wallTileMap = GameObject.FindObjectOfType<WallTileMap>().GetComponent<Tilemap>();
         //After ->
         //wallTileMap = GameManager.WallTileMap;
         //And we probably don't even need to save the reference here, we can just say GameManager.WallTileMap
         //when we want to use it
-
-        //Quite heavy in terms of data so definitely don't want to call
-        //on each Update() but its fine to do once in Start() for now.
-
     }
 
     // Update is called once per frame

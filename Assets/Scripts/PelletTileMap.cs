@@ -84,7 +84,10 @@ public class PelletTileMap : MonoBehaviour
     {
         SetTileAt(pos, null);
 
-        //TODO: Do the thing... points and whatnot
+        //TODO: increment points based on PelletPoints variable
+        
+
+
     }
 
     void SetTileAt(Vector2 pos, TileBase tile)
