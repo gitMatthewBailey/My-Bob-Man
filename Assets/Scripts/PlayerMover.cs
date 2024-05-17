@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization; 
 
 
+//PlayerMover is a component that allows us to move the player.
 //Not a Runtime 'thing', more so we can spot errors in the editor as they happen easier, 
 //also to ensure the GameObject we want to have this component DEFINITELY DOES have it.
 [RequireComponent(typeof(MazeMover))]
@@ -15,8 +16,8 @@ public class PlayerMover : MonoBehaviour
 //Setters and Getters in the MazeMover.
 
     //Class variables to declare so we can use them in the methods with less of a performance hit.
-    MazeMover mazeMover;
-    Vector2 newDir;
+    private MazeMover mazeMover;
+    private Vector2 newDir;
 
     // Start changed to Awake
     void Awake()

@@ -6,15 +6,16 @@ using UnityEngine;
 public class EnemyMover : MonoBehaviour
 {
     //Class variables to declare so we can use them in the methods with less of a performance hit.
-    MazeMover mazeMover;
-    Vector2 newDir;
-    Vector2 oldDir;
+    //Variables default to private but we're setting them manually to private for clarity purposes.
+    private MazeMover mazeMover;
+    private Vector2 newDir;
+    private Vector2 oldDir;
 
 
     //Might want to weight the chance of changing direction, this way if we have more enemies in the future
     //we can change this weight as, in the real Pac-Man the ghosts have different behaviours to each other.
     [SerializeField]
-    float forwardWeight = 0.5f; //Chance of continuing forward instead of turning at intersection.
+    private float forwardWeight = 0.5f; //Chance of continuing forward instead of turning at intersection.
 
     // Start changed to Awake             
     void Awake() 
@@ -24,7 +25,7 @@ public class EnemyMover : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    /* void Update()
     {
         //Essentially all that our 'AI', so to speak, is going to do is change the direction
         //of our ghosts.
@@ -37,7 +38,7 @@ public class EnemyMover : MonoBehaviour
 
         // mazeMover.SetDesiredDirection(newDir.normalized);
         
-    }
+    } */
 
     void DoTurn()
     {

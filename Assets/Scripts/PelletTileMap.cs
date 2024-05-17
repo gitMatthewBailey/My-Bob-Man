@@ -8,9 +8,9 @@ public class PelletTileMap : MonoBehaviour
     //Class variables
     // TODO: Add code for pellet eaters to signal updating this whenever they come or go,
     //if that's something that happens (such as adding or removing PelletEaters (multiplayer?))
-    PelletEater[] pelletEaters;
-
-    Tilemap myTilemap;
+    private PelletEater[] pelletEaters;
+    private ScoreManager scoreManager;
+    private Tilemap myTilemap;
 
     //'FruitTilemap' and 'PPTilemap' created in Unity. (Identical to 'PelletTilemap' (used to hold
     //reference to this script, and to hold the sprites for fruits and power pellets (PP))).
@@ -20,16 +20,16 @@ public class PelletTileMap : MonoBehaviour
     //potentially re-done into a more flexible but more complex design.
     
     //But what we don't have is the ability to get information out of this pellet, 
-    //which is where subclassing TileBase in TileData would come in.
+    //which is where subclassing TileBase in TileData could come in.
 
     //What we can do (because we currently don't have or need a bunch of custom behaviours) is have these
-    //variables shared which we'll use  to hold information about things on the map.
+    //variables shared which we'll use to hold information about things on the map.
     [SerializeField]
-    private int PelletPoints = 1;
+    private int pelletPoints = 1;
     [SerializeField]
-    private bool RequiredForLevelCompletion = false;
+    private bool requiredForLevelCompletion = false;
     [SerializeField]
-    private float PowerSeconds = 0;
+    private float powerSeconds = 0;
 
     //Declaring offsetPos here so we can use it in the Update() method
     Vector2 offsetPos;
@@ -38,7 +38,7 @@ public class PelletTileMap : MonoBehaviour
     void Awake()
     {
         pelletEaters = GameObject.FindObjectsOfType<PelletEater>();
-
+        scoreManager = GameObject.FindObjectOfType<ScoreManager>();
         myTilemap = GetComponent<Tilemap>();
         //easy, because the script belongs to the same object as the Tilemap
     }
@@ -50,11 +50,12 @@ public class PelletTileMap : MonoBehaviour
         foreach (PelletEater pe in pelletEaters)
         {
             //Not having to check every pellet, just literally checking in the tile we're about to enter, whether
-            //there's a pellet graphic or not.
+            //there's a pellet sprite or not.
 
             if (CheckPellet(pe))
             {
                 EatPelletAt(offsetPos);
+                scoreManager.AddScore(pelletPoints);
             }
         }
     }
@@ -69,15 +70,10 @@ public class PelletTileMap : MonoBehaviour
         //Check what tile pe is in, and if there is a pellet there, eat it, otherwise do nothing.
         TileBase tile = GetTileAt(offsetPos);
 
-        if (tile == null)
-        {
-            //Empty tile with no pellets.
-            return false;
-        }
+        return tile != null; // && tile.name == "Pellet";
 
         //Debug.Log("Scran!");
         //Tile has a pellet on it, t.f. return true so in Update() we can call EatPelletAt() easily.
-        return true;
     }
 
     void EatPelletAt(Vector2 pos )
